@@ -1,11 +1,11 @@
 package br.edu.usj.javabanco.entity;
 
 public class Empresa {
-	int id;
-	String nome;
-	int anoFundacao;
-	String ramoAtuacao;
-	float capital;
+	private int id;
+	private String nome;
+	private int anoFundacao;
+	private String ramoAtuacao;
+	private float capital;
 
 	public int getId() {
 		return id;
