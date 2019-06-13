@@ -1,8 +1,6 @@
-package br.edu.usj.javabanco.dao;
+package br.edu.usj.javabanco.entity;
 
 import java.sql.Date;
-
-import br.edu.usj.javabanco.entity.Empresa;
 
 public class Funcionario {
 	private int id;

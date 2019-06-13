@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.edu.usj.javabanco.dao.EmpresaDAO;
-import br.edu.usj.javabanco.dao.Funcionario;
 import br.edu.usj.javabanco.dao.FuncionarioDAO;
 import br.edu.usj.javabanco.entity.Empresa;
+import br.edu.usj.javabanco.entity.Funcionario;
 
 public class Sistema {
 

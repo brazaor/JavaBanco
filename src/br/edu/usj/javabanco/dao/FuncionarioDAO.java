@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.usj.javabanco.entity.Empresa;
+import br.edu.usj.javabanco.entity.Funcionario;
 
 public class FuncionarioDAO {
 
