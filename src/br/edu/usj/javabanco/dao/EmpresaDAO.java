@@ -33,8 +33,8 @@ public class EmpresaDAO {
 			}
 			
 		} catch (SQLException e) {
+			System.err.println("Erro ao listar as empresas!");
 			e.printStackTrace();
-			System.err.println("Erro ao criar o statement!");
 		}
  
 		return empresas;
@@ -54,8 +54,8 @@ public class EmpresaDAO {
 			
 			resultado = stm.executeUpdate();
 		} catch (SQLException e1) {
+			System.err.println("Erro ao gravar a empresa!");
 			e1.printStackTrace();
-			System.err.println("Erro ao criar o prepared statement!");
 		}
 		return resultado > 0;
 	}
@@ -69,8 +69,8 @@ public class EmpresaDAO {
 			stm.setInt(1, codigo);
 			resultado = stm.executeUpdate();
 		} catch (SQLException e1) {
+			System.err.println("Erro ao excluir a empresa!");
 			e1.printStackTrace();
-			System.err.println("Erro ao criar o prepared statement!");
 		}
 		return resultado > 0;
 	} 

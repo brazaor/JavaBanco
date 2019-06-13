@@ -1,17 +1,24 @@
 package br.edu.usj.javabanco.view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import br.edu.usj.javabanco.dao.EmpresaDAO;
+import br.edu.usj.javabanco.dao.Funcionario;
+import br.edu.usj.javabanco.dao.FuncionarioDAO;
 import br.edu.usj.javabanco.entity.Empresa;
 
 public class Sistema {
 
 	EmpresaDAO empresaDAO;
+	FuncionarioDAO funcionarioDAO;
 	
 	public Sistema() {
-		empresaDAO = new EmpresaDAO(); 
+		empresaDAO = new EmpresaDAO();
+		funcionarioDAO = new FuncionarioDAO();
 	}
 	
 	@SuppressWarnings("resource")
@@ -35,6 +42,43 @@ public class Sistema {
 			System.out.println("Erro ao gravar empresa!");
 		}
 	}
+
+	@SuppressWarnings("resource")
+	public void gravarFuncionario() {
+		Scanner scanner = new Scanner(System.in);
+		Funcionario funcionario = new Funcionario();
+
+		try {
+			System.out.println("Digite o nome do funcionário:");
+			funcionario.setNome(scanner.next());
+			System.out.println("Digite a data de nascimento (no formato AAAA-MM-DD):");
+			String dataString = scanner.next();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date data;
+			data = format.parse(dataString);
+			funcionario.setNascimento(new java.sql.Date(data.getTime()));
+			System.out.println("Digite o ano de inicío:");
+			funcionario.setAnoInicioTrabalho(scanner.nextInt());
+			System.out.println("Digite a função do funcionário:");
+			funcionario.setFuncao(scanner.next());
+			System.out.println("Digite o identificador da empresa:");
+			Empresa empresa = new Empresa();
+			empresa.setId(scanner.nextInt());
+			funcionario.setEmpresa(empresa);
+			
+			boolean gravou = funcionarioDAO.gravarFuncionario(funcionario);
+			if (gravou) {
+				System.out.println("Funcionário gravado com sucesso!");
+			}
+			else {
+				System.out.println("Erro ao gravar funcionário!");
+			}
+		} catch (ParseException e) {
+			System.out.println("formato inválido da data");
+			e.printStackTrace();
+		}
+
+	}
 	
 	@SuppressWarnings("resource")
 	public void removerEmpresa(){
@@ -51,6 +95,21 @@ public class Sistema {
 		}
 	}
 	
+	@SuppressWarnings("resource")
+	public void removerFuncionario(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Digite o código do funcionário a ser excluído:");
+		int codigo = scanner.nextInt();		
+		
+		boolean excluiu = funcionarioDAO.excluirFuncionario(codigo);
+		if (excluiu) {
+			System.out.println("Funcionário removido com sucesso!");
+		}
+		else {
+			System.out.println("Erro ao remover funcionário!");
+		}
+	}
+	
 	public void listarEmpresas() {
 		List<Empresa> lista = empresaDAO.listarEmpresas();
 		
@@ -64,6 +123,21 @@ public class Sistema {
 			System.out.println("");
 		}
 	}
+
+	public void listarFuncionarios() {
+		List<Funcionario> lista = funcionarioDAO.listarFuncionarios();
+		
+		System.out.println("Lista de Funcionários:");
+		for(Funcionario f: lista) {
+			System.out.println("Id: "+f.getId());
+			System.out.println("Nome: "+f.getNome());
+			System.out.println("Nascimento: "+f.getNascimento());
+			System.out.println("Ano de início: "+f.getAnoInicioTrabalho());
+			System.out.println("Função: "+f.getFuncao());
+			System.out.println("Empresa: "+f.getEmpresa().getNome());
+			System.out.println("");
+		}
+	}
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
@@ -74,8 +148,11 @@ public class Sistema {
 			System.out.println("Sistema de gestão de empresas: ");
 			System.out.println("Digite a opção:");
 			System.out.println("1 - Gravar empresas");
-			System.out.println("2 - Remover empresas");
-			System.out.println("3 - Listar empresas");
+			System.out.println("2 - Gravar funcionários");
+			System.out.println("3 - Remover empresas");
+			System.out.println("4 - Remover funcionários");
+			System.out.println("5 - Listar empresas");
+			System.out.println("6 - Listar funcionários");
 			System.out.println("0 - Sair");
 			System.out.print(": ");
 			codigo = scanner.nextInt();
@@ -86,11 +163,23 @@ public class Sistema {
 				System.out.println("");
 				break;
 			case 2:
-				s.removerEmpresa();
+				s.gravarFuncionario();
 				System.out.println("");
 				break;
 			case 3:
+				s.removerEmpresa();
+				System.out.println("");
+				break;
+			case 4:
+				s.removerFuncionario();
+				System.out.println("");
+				break;				
+			case 5:
 				s.listarEmpresas();
+				System.out.println("");
+				break;
+			case 6:
+				s.listarFuncionarios();
 				System.out.println("");
 				break;
 			case 0:
