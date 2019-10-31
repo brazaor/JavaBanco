@@ -56,7 +56,8 @@ public class Sistema {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date data;
 			data = format.parse(dataString);
-			funcionario.setNascimento(new java.sql.Date(data.getTime()));
+			java.sql.Date d2 = new java.sql.Date(data.getTime());
+			funcionario.setNascimento(d2);
 			System.out.println("Digite o ano de inicío:");
 			funcionario.setAnoInicioTrabalho(scanner.nextInt());
 			System.out.println("Digite a função do funcionário:");
